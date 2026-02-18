@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aroma 3D | The Interactive Cafe</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <nav class="glass-nav">
+        <a href="#" class="logo" onclick="navigate('home')">MY COFFEE</a>
+        
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <div class="nav-links" id="nav-links">
+            <a onclick="navigate('home')" class="nav-btn active" data-target="home">Home</a>
+            <a onclick="navigate('menu')" class="nav-btn" data-target="menu">Menu</a>
+            <a onclick="navigate('roastery')" class="nav-btn" data-target="roastery">Roastery</a>
+            <button class="cart-toggle-btn" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+            <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle Theme">🌓</button>
+        </div>
+    </nav>
+
+    <section id="home" class="page-section active">
+        <div class="hero-content">
+            <h1 class="elegant-title">MY COFFEE<br><span>Crafted for The Senses</span></h1>
+            <p>Drag your cursor to rotate the cup. Hit the button below for a caffeine overload!</p>
+            <div class="hero-buttons">
+                <button class="cta-btn" onclick="navigate('menu')">Taste the Menu</button>
+                <button class="cta-btn shake-btn" id="shake-btn">⚡ SHAKE MUG</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="page-section">
+        <div class="glass-panel menu-panel">
+            <h2 class="section-title">Curated Offerings</h2>
+            
+            <h3 class="category-title">Signature Pours</h3>
+            <div class="menu-grid">
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🌹</div>
+                    <h3>Pistachio Rose Latte</h3>
+                    <p>Espresso pulled over crushed pistachios and steamed oat milk.</p>
+                    <div class="card-footer">
+                        <span class="price">$6.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Pistachio Rose Latte', 6.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">💨</div>
+                    <h3>Smoked Macchiato</h3>
+                    <p>Vanilla bean milk, marked with a double shot and smoked with applewood.</p>
+                    <div class="card-footer">
+                        <span class="price">$5.80</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Smoked Macchiato', 5.80)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍯</div>
+                    <h3>Honeycomb Flat White</h3>
+                    <p>Silky micro-foam poured over a double ristretto with crushed honeycomb.</p>
+                    <div class="card-footer">
+                        <span class="price">$5.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Honeycomb Flat White', 5.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">☕</div>
+                    <h3>Cortado</h3>
+                    <p>Equal parts bold espresso and warmly steamed milk for a perfect balance.</p>
+                    <div class="card-footer">
+                        <span class="price">$4.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Cortado', 4.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🪻</div>
+                    <h3>Lavender Honey Latte</h3>
+                    <p>A soothing blend of local wildflower honey, espresso, and lavender syrup.</p>
+                    <div class="card-footer">
+                        <span class="price">$5.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Lavender Honey Latte', 5.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍊</div>
+                    <h3>Orange Zest Americano</h3>
+                    <p>Hot water and espresso infused with freshly grated orange peel and clove.</p>
+                    <div class="card-footer">
+                        <span class="price">$4.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Orange Zest Americano', 4.00)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="category-title">The Cold Bar & Refreshers</h3>
+            <div class="menu-grid">
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🧊</div>
+                    <h3>Nitro Caramel Cold Brew</h3>
+                    <p>18-hour cold brew infused with nitrogen for a creamy, stout-like finish.</p>
+                    <div class="card-footer">
+                        <span class="price">$6.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Nitro Caramel Cold Brew', 6.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍨</div>
+                    <h3>Vanilla Bean Affogato</h3>
+                    <p>A double shot of hot espresso poured table-side over artisan gelato.</p>
+                    <div class="card-footer">
+                        <span class="price">$7.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Vanilla Bean Affogato', 7.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍑</div>
+                    <h3>Iced Peach Oolong</h3>
+                    <p>Cold-steeped oolong tea mixed with a vibrant white peach puree.</p>
+                    <div class="card-footer">
+                        <span class="price">$4.80</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Iced Peach Oolong', 4.80)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">✨</div>
+                    <h3>Sparkling Cascara</h3>
+                    <p>A fizzy, refreshing tonic made from dried coffee cherries and lime.</p>
+                    <div class="card-footer">
+                        <span class="price">$5.20</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Sparkling Cascara', 5.20)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="category-title">Hearty Cafe Fare</h3>
+            <div class="menu-grid">
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🥯</div>
+                    <h3>Smoked Salmon Bagel</h3>
+                    <p>Wild-caught salmon, whipped dill cream cheese, and capers on an everything bagel.</p>
+                    <div class="card-footer">
+                        <span class="price">$11.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Smoked Salmon Bagel', 11.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🥪</div>
+                    <h3>Caprese Panini</h3>
+                    <p>Fresh mozzarella, heirloom tomatoes, and basil pesto pressed on ciabatta.</p>
+                    <div class="card-footer">
+                        <span class="price">$10.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Caprese Panini', 10.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍳</div>
+                    <h3>Shakshuka Skillet</h3>
+                    <p>Two eggs baked in a spiced tomato-red pepper sauce with sourdough toast.</p>
+                    <div class="card-footer">
+                        <span class="price">$13.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Shakshuka Skillet', 13.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🌯</div>
+                    <h3>Roasted Pepper Wrap</h3>
+                    <p>House-made garlic hummus, roasted red peppers, spinach, and feta cheese.</p>
+                    <div class="card-footer">
+                        <span class="price">$9.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Roasted Pepper Wrap', 9.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍟</div>
+                    <h3>Truffle Parmesan Fries</h3>
+                    <p>Crispy shoestring fries tossed in white truffle oil and aged parmesan.</p>
+                    <div class="card-footer">
+                        <span class="price">$7.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Truffle Parmesan Fries', 7.00)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="category-title">Sweets & Confections</h3>
+            <div class="menu-grid">
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🥐</div>
+                    <h3>Pain au Chocolat</h3>
+                    <p>Traditional French pastry filled with twin bars of dark artisanal chocolate.</p>
+                    <div class="card-footer">
+                        <span class="price">$4.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Pain au Chocolat', 4.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🍋</div>
+                    <h3>Lemon Poppyseed Loaf</h3>
+                    <p>A dense, moist slice drizzled with a sharp, sweet lemon icing.</p>
+                    <div class="card-footer">
+                        <span class="price">$4.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Lemon Poppyseed Loaf', 4.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🧁</div>
+                    <h3>Vegan Banana Muffin</h3>
+                    <p>Spiced banana muffin folded with crushed walnuts. 100% plant-based.</p>
+                    <div class="card-footer">
+                        <span class="price">$4.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Vegan Banana Muffin', 4.50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🌀</div>
+                    <h3>Cinnamon Cruffin</h3>
+                    <p>The flaky layers of a croissant baked into a muffin shape, dusted in cinnamon sugar.</p>
+                    <div class="card-footer">
+                        <span class="price">$5.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Cinnamon Cruffin', 5.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🥧</div>
+                    <h3>Raspberry Almond Tart</h3>
+                    <p>A crisp buttery shell filled with almond frangipane and topped with fresh raspberries.</p>
+                    <div class="card-footer">
+                        <span class="price">$6.50</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Raspberry Almond Tart', 6.50)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="category-title">Brewing Gear & Merch</h3>
+            <div class="menu-grid">
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">⚖️</div>
+                    <h3>Matte Black Scale</h3>
+                    <p>Precision 0.1g digital scale for the perfect pour-over ratio.</p>
+                    <div class="card-footer">
+                        <span class="price">$45.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Matte Black Scale', 45.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">🫖</div>
+                    <h3>Gooseneck Kettle</h3>
+                    <p>Variable temperature control for precise extraction.</p>
+                    <div class="card-footer">
+                        <span class="price">$85.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Gooseneck Kettle', 85.00)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-card tilt-card">
+                    <div class="card-icon">👕</div>
+                    <h3>Aroma Graphic Tee</h3>
+                    <p>Heavyweight cotton t-shirt featuring our signature 3D cup logo.</p>
+                    <div class="card-footer">
+                        <span class="price">$25.00</span>
+                        <button class="buy-btn" onclick="addToCart(this, 'Aroma Graphic Tee', 25.00)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="roastery" class="page-section">
+        <div class="glass-panel form-panel" style="max-width: 600px; text-align: center;">
+            <h2 class="section-title">The Roaster</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-muted);">Drag the slider to roast your bean. Find your perfect flavor profile.</p>
+            
+            <div class="bean-display">
+                <div id="interactive-bean" class="coffee-bean"></div>
+            </div>
+            
+            <h3 id="roast-name" style="color: var(--primary-color); margin: 1.5rem 0 0.5rem; font-size: 1.8rem;">Green Bean</h3>
+            <p id="roast-desc" style="margin-bottom: 2rem; min-height: 48px;">Raw, unroasted. Grassy and highly acidic.</p>
+
+            <input type="range" id="roast-slider" min="0" max="100" value="0" class="styled-slider">
+        </div>
+    </section>
+
+    <section id="checkout" class="page-section">
+        <div class="glass-panel form-panel">
+            <h2 class="section-title">Fast Checkout</h2>
+            <div class="payment-tabs">
+                <button class="pay-tab active" onclick="switchPayment('upi')">UPI</button>
+                <button class="pay-tab" onclick="switchPayment('crypto')">Crypto</button>
+            </div>
+            <div id="upi-section" class="pay-section active">
+                <div class="qr-placeholder"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi" alt="QR"></div>
+                <p style="text-align:center;">Scan to Pay</p>
+            </div>
+            <div id="crypto-section" class="pay-section" style="display: none;">
+                <p style="text-align:center;">Send exact amount to wallet address.</p>
+            </div>
+            <button class="cta-btn full-width" style="margin-top: 2rem;" onclick="alert('Order Processed Successfully!')">Confirm Payment</button>
+        </div>
+    </section>
+
+    <div id="cart-sidebar" class="glass-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-btn" onclick="toggleCart()">✕</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: $<span id="cart-total-price">0.00</span></div>
+            <button class="cta-btn full-width" onclick="checkoutFromCart()" style="margin-bottom: 1rem;">Proceed to Pay</button>
+            <button onclick="clearCart()" style="width: 100%; background: transparent; border: 1px solid red; color: red; padding: 0.5rem; border-radius: 8px; cursor: pointer;">Clear Cart</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
