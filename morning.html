@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Good Morning Harshi</title>
+    <style>
+        :root {
+            --primary-pink: #ff85a2;
+            --dark-pink: #d81b60;
+            --heart-red: #e91e63;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffdeeb 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Initial Screen */
+        #mainContent {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        h1 {
+            color: var(--dark-pink);
+            font-size: clamp(1.8rem, 10vw, 3rem);
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5);
+            animation: floatText 3s ease-in-out infinite;
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Interactive Button */
+        .btn-love {
+            position: relative;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            background: var(--heart-red);
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-love:active {
+            transform: scale(0.9) translateY(5px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2);
+        }
+
+        /* Final Big Heart */
+        #heartContainer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90vw;
+            max-width: 450px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .heart-svg {
+            width: 100%;
+            fill: var(--heart-red);
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.2));
+        }
+
+        .heart-text {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: 800;
+            font-size: clamp(1.1rem, 5.5vw, 1.6rem);
+            width: 75%;
+            line-height: 1.3;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Floating Particle Styles */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
+            will-change: transform;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mainContent">
+        <h1>good morning harshi my love</h1>
+        <button class="btn-love" onclick="handleReveal(this)">
+            Tap for a surprise 💋
+        </button>
+    </div>
+
+    <div id="heartContainer">
+        <svg class="heart-svg" viewBox="0 0 32 32">
+            <path d="M16 28.5L14.1 26.7C7.33 20.55 3 16.61 3 11.85 3 7.96 6.06 4.9 9.95 4.9c2.2 0 4.31 1.02 5.65 2.63 1.34-1.61 3.45-2.63 5.65-2.63 3.89 0 6.95 3.06 6.95 6.95 0 4.76-4.33 8.7-11.1 14.85L16 28.5z"/>
+        </svg>
+        <div class="heart-text">i love you harshi more then anything</div>
+    </div>
+
+    <script>
+        const emojis = ['❤️', '💖', '💋', '😘', '💕', '🌸', '✨'];
+        
+        // Continuous background floating emojis
+        function createParticle(x, y, isBurst = false) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            const size = isBurst ? (Math.random() * 30 + 20) : (Math.random() * 20 + 10);
+            p.style.fontSize = `${size}px`;
+            p.style.left = x || (Math.random() * 100 + 'vw');
+            p.style.top = y || '-50px';
+            
+            document.body.appendChild(p);
+
+            const duration = isBurst ? (Math.random() * 800 + 400) : (Math.random() * 3000 + 3000);
+            const destinationY = isBurst ? (Math.random() * 400 - 200) : 110;
+            const destinationX = isBurst ? (Math.random() * 400 - 200) : (Math.random() * 100 - 50);
+
+            const animation = p.animate([
+                { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
+                { transform: `translate(${destinationX}px, ${isBurst ? destinationY + 'px' : '110vh'}) scale(0) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: isBurst ? 'cubic-bezier(0, .9, .57, 1)' : 'linear'
+            });
+
+            animation.onfinish = () => p.remove();
+        }
+
+        // Keep background filled
+        setInterval(() => {
+            if (document.visibilityState === 'visible') createParticle();
+        }, 400);
+
+        function handleReveal(btn) {
+            // 1. Create a burst of hearts at the button location
+            const rect = btn.getBoundingClientRect();
+            for(let i=0; i<15; i++) {
+                createParticle(rect.left + rect.width/2 + 'px', rect.top + 'px', true);
+            }
+
+            // 2. Hide content
+            const main = document.getElementById('mainContent');
+            main.classList.add('hidden');
+            
+            // 3. Show the big heart with a pop
+            setTimeout(() => {
+                main.style.display = 'none';
+                const heart = document.getElementById('heartContainer');
+                heart.style.display = 'block';
+                
+                // Animate heart appearance
+                heart.animate([
+                    { transform: 'translate(-50%, -50%) scale(0)', opacity: 0 },
+                    { transform: 'translate(-50%, -50%) scale(1.1)', opacity: 1 },
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 }
+                ], {
+                    duration: 600,
+                    easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    fill: 'forwards'
+                });
+
+                // Start extra bursts after heart appears
+                setInterval(() => {
+                    createParticle(window.innerWidth/2 + 'px', window.innerHeight/2 + 'px', true);
+                }, 800);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
